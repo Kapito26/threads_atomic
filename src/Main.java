@@ -2,6 +2,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
 public class Main {
     public static String generateText(String letters, int length) {
         Random random = new Random();
@@ -16,6 +17,17 @@ public class Main {
     public static AtomicInteger count4 = new AtomicInteger(0);
     public static AtomicInteger count5 = new AtomicInteger(0);
 
+    public static void atomicCountInc(String str) {
+        if (str.length() == 3) {
+            count3.getAndIncrement();
+        }
+        if (str.length() == 4) {
+            count4.getAndIncrement();
+        }
+        if (str.length() == 5) {
+            count5.getAndIncrement();
+        }
+    }
 
     public static void main(String[] args) throws InterruptedException {
         Random random = new Random();
@@ -33,16 +45,7 @@ public class Main {
                 buffer.reverse();
                 String textConv = buffer.toString();
                 if (texts[i].equals(textConv)) {
-
-                    if (texts[i].length() == 3) {
-                        count3.getAndIncrement();
-                    }
-                    if (texts[i].length() == 4) {
-                        count4.getAndIncrement();
-                    }
-                    if (texts[i].length() == 5) {
-                        count5.getAndIncrement();
-                    }
+                    atomicCountInc(texts[i]);
                 }
             }
         });
@@ -57,16 +60,7 @@ public class Main {
                     }
                 }
                 if (b) {
-
-                    if (texts[i].length() == 3) {
-                        count3.getAndIncrement();
-                    }
-                    if (texts[i].length() == 4) {
-                        count4.getAndIncrement();
-                    }
-                    if (texts[i].length() == 5) {
-                        count5.getAndIncrement();
-                    }
+                    atomicCountInc(texts[i]);
                 }
             }
         });
@@ -77,16 +71,7 @@ public class Main {
                 Arrays.sort(chArr);
                 String textOrder = String.valueOf(chArr);
                 if (texts[i].equals(textOrder)) {
-
-                    if (texts[i].length() == 3) {
-                        count3.getAndIncrement();
-                    }
-                    if (texts[i].length() == 4) {
-                        count4.getAndIncrement();
-                    }
-                    if (texts[i].length() == 5) {
-                        count5.getAndIncrement();
-                    }
+                    atomicCountInc(texts[i]);
                 }
             }
         });
@@ -103,4 +88,3 @@ public class Main {
         System.out.println("Красивых слов с длиной 5: " + count5.get() + " шт.");
     }
 }
-
